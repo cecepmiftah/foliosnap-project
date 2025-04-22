@@ -3,8 +3,8 @@ import { memo, useState } from "react";
 
 import "reactjs-tiptap-editor/style.css";
 import { useDebouncedCallback } from "use-debounce";
-import PortfolioEditor from "../../Components/PortfolioComponents/PortfolioEditor";
-import CategoryInput from "../../Components/PortfolioComponents/InputCategory";
+import PortfolioEditor from "@/Components/PortfolioComponents/PortfolioEditor";
+import CategoryInput from "@/Components/PortfolioComponents/InputCategory";
 
 const Edit = memo(({ portfolio, content, categories }) => {
     const { flash } = usePage().props;
@@ -48,9 +48,13 @@ const Edit = memo(({ portfolio, content, categories }) => {
         formData.append("title", data.title);
         formData.append("description", data.description);
 
-        formData.append("project_url", data.project_url);
+        if (data.project_url !== null) {
+            formData.append("project_url", data.project_url);
+        }
 
-        formData.append("project_date", data.project_date);
+        if (data.project_date !== null) {
+            formData.append("project_date", data.project_date);
+        }
 
         // Kalau content adalah objek (JSON editor), harus diubah jadi string dulu
         formData.append("content", JSON.stringify(contentState));
@@ -85,9 +89,10 @@ const Edit = memo(({ portfolio, content, categories }) => {
 
             if (response.ok) {
                 setMessage("Portfolio updated successfully!");
+                //redirect to the portfolio page
+                window.location.href = `/portfolios/${result.slug}`;
             } else {
                 // Tampilkan error dari Laravel
-                console.error(result.errors);
                 setErrors("Something went wrong. Please try again.");
             }
 
@@ -95,7 +100,6 @@ const Edit = memo(({ portfolio, content, categories }) => {
         } catch (error) {
             setLoading(false);
             setErrors({ upload: "Failed to update portfolio." });
-            console.error("Update error:", error);
         }
     };
 
@@ -119,13 +123,13 @@ const Edit = memo(({ portfolio, content, categories }) => {
                 </p>
             </div>
             {/* Notification */}
-            {(errors.upload || message) && (
+            {(errors.upload || errors) && (
                 <div
                     className={`alert ${
                         errors.upload ? "alert-error" : "alert-success"
                     } mb-6 transition-all duration-300`}
                 >
-                    <span>{errors.upload || message}</span>
+                    <span>{errors.upload || errors}</span>
                 </div>
             )}
             <form

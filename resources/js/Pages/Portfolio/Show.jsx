@@ -1,7 +1,6 @@
 import { Link, usePage } from "@inertiajs/react";
-import PortfolioViewer from "../../Components/PortfolioComponents/PortfolioViewer";
-import CommentSection from "../../Components/PortfolioComponents/CommentSection";
-import Pagination from "../../Components/Pagination";
+import PortfolioViewer from "@/Components/PortfolioComponents/PortfolioViewer";
+import CommentSection from "@/Components/PortfolioComponents/CommentSection";
 import avatarImg from "../../../img/person.png";
 
 export default function Show({ portfolio, content }) {
@@ -146,11 +145,27 @@ export default function Show({ portfolio, content }) {
                         </div>
                     )}
 
-                    {/* Edit Link */}
+                    {/* User  */}
+                    <div className="flex items-center">
+                        <img
+                            src={portfolio.user.avatar || avatarImg}
+                            alt={portfolio.user.username}
+                            className="w-6 h-6 rounded-full object-cover mr-2"
+                        />
+                        <Link
+                            href={`/user/${portfolio.user.username}`}
+                            prefetch
+                            className="text-blue-600 dark:text-blue-400 hover:underline"
+                        >
+                            {portfolio.user.username}
+                        </Link>
+                    </div>
 
+                    {/* Edit Link */}
                     {auth.user && auth.user.id === portfolio.user_id && (
                         <Link
                             href={`/portfolios/${portfolio.slug}/edit`}
+                            prefetch
                             className="flex items-center hover:text-blue-500 dark:hover:text-blue-400"
                         >
                             <svg

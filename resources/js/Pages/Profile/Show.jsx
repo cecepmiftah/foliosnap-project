@@ -3,7 +3,7 @@ import { Link, usePage } from "@inertiajs/react";
 import { motion, AnimatePresence } from "framer-motion";
 import PortfolioCardProfile from "@/Components/CardComponents/PortfolioCardProfile";
 import WorkExperienceSection from "@/Components/ProfileComponents/WorkExperienceSection";
-import ContactMeSection from "../../Components/ProfileComponents/ContactMeSection";
+import ContactMeSection from "@/Components/ProfileComponents/ContactMeSection";
 
 export default function Show({ user }) {
     const { auth, flash } = usePage().props;
@@ -118,7 +118,8 @@ export default function Show({ user }) {
                                             />
                                         </svg>
                                         <span>
-                                            {user.city}, {user.location}
+                                            {user.city && `${user.city}, `}{" "}
+                                            {user.location}
                                         </span>
                                     </div>
                                 )}

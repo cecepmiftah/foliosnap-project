@@ -1,11 +1,10 @@
 import { useForm, usePage } from "@inertiajs/react";
-import { memo, Suspense, useEffect, useState } from "react";
-import TextEditor from "reactjs-tiptap-editor";
+import { memo, Suspense, useState } from "react";
 
 import "reactjs-tiptap-editor/style.css";
 import { useDebouncedCallback } from "use-debounce";
-import CategoryInput from "../../Components/PortfolioComponents/InputCategory";
-import PortfolioEditor from "../../Components/PortfolioComponents/PortfolioEditor";
+import CategoryInput from "@/Components/PortfolioComponents/InputCategory";
+import PortfolioEditor from "@/Components/PortfolioComponents/PortfolioEditor";
 
 const Create = memo(({ categories }) => {
     const [content, setContent] = useState(null);

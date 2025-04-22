@@ -246,6 +246,7 @@ export default function Header() {
                                 <Link
                                     href={`/user/${auth.user.username}`}
                                     prefetch
+                                    onClick={() => setMobileMenuOpen(false)}
                                     className="avatar online"
                                 >
                                     <div className="w-12 rounded-full">
@@ -259,6 +260,7 @@ export default function Header() {
                                     <Link
                                         href={`/user/${auth.user.username}`}
                                         prefetch
+                                        onClick={() => setMobileMenuOpen(false)}
                                         className="font-semibold hover:text-primary"
                                     >
                                         <p className="text-sm opacity-70">
@@ -274,6 +276,7 @@ export default function Header() {
                                 <Link
                                     href="/"
                                     prefetch
+                                    onClick={() => setMobileMenuOpen(false)}
                                     className={`hover:text-primary transition-colors ${
                                         url === "/"
                                             ? "bg-base-200 text-primary"
@@ -287,6 +290,7 @@ export default function Header() {
                                 <Link
                                     href="/portfolios"
                                     prefetch
+                                    onClick={() => setMobileMenuOpen(false)}
                                     className={`hover:text-primary transition-colors ${
                                         url === "/portfolios"
                                             ? "bg-base-200 text-primary"
@@ -302,6 +306,7 @@ export default function Header() {
                                     <Link
                                         href="/portfolios/create"
                                         prefetch
+                                        onClick={() => setMobileMenuOpen(false)}
                                         className={`hover:text-primary transition-colors ${
                                             url === "/portfolios/create"
                                                 ? "bg-base-200 text-primary"
@@ -332,6 +337,9 @@ export default function Header() {
                                         <Link
                                             href="/login"
                                             prefetch
+                                            onClick={() =>
+                                                setMobileMenuOpen(false)
+                                            }
                                             className="btn btn-ghost btn-block justify-start hover:bg-base-200"
                                         >
                                             Log In
@@ -341,6 +349,9 @@ export default function Header() {
                                         <Link
                                             href="/register"
                                             prefetch
+                                            onClick={() =>
+                                                setMobileMenuOpen(false)
+                                            }
                                             className="btn btn-primary btn-block justify-start"
                                         >
                                             Sign Up

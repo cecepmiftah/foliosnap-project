@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { format, set } from "date-fns";
-import { Link, useForm, usePage } from "@inertiajs/react";
+import { format } from "date-fns";
+import { Link, useForm } from "@inertiajs/react";
 
 export default function WorkExperienceInput({ user, setMessage }) {
-    const { auth } = usePage().props;
-
-    const { data, setData, post, processing, errors } = useForm({
-        company: "",
-        position: "",
-        start_date: "",
-        end_date: "",
+    const { data, setData, patch, processing, errors } = useForm({
+        company: null,
+        position: null,
+        start_date: null,
+        end_date: null,
         is_current: false,
-        description: "",
+        description: null,
     });
+
+    const [isUpdating, setIsUpdating] = useState(false);
+    const [messageWorkExp, setMessageWorkExp] = useState(null);
 
     const handleCurrentJobChange = (e) => {
         const isChecked = e.target.checked;
@@ -22,10 +23,10 @@ export default function WorkExperienceInput({ user, setMessage }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(`/user/${user.username}/work-experiences`, {
+        patch(`/user/${user.username}/work-experiences`, {
             preserveScroll: true,
             onSuccess: () => {
-                setMessage("Work experience added successfully.");
+                setMessageWorkExp("Work experience updated successfully.");
                 setData({
                     company: "",
                     position: "",
@@ -34,6 +35,7 @@ export default function WorkExperienceInput({ user, setMessage }) {
                     is_current: false,
                     description: "",
                 });
+                setIsUpdating(false);
             },
         });
     };
@@ -41,6 +43,33 @@ export default function WorkExperienceInput({ user, setMessage }) {
     return (
         <div className="mt-6">
             <h2 className="text-xl font-semibold mb-4">Work Experience</h2>
+            {messageWorkExp && (
+                <div
+                    role="alert"
+                    className="alert alert-success alert-soft mb-4 flex items-center justify-between"
+                >
+                    <span>{messageWorkExp}</span>
+                    <button
+                        className="btn btn-sm btn-ghost"
+                        onClick={() => setMessageWorkExp(null)}
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            )}
 
             <div className="grid grid-cols-1">
                 {/* Existing Experiences */}
@@ -69,6 +98,44 @@ export default function WorkExperienceInput({ user, setMessage }) {
                                               )}
                                     </p>
                                 </div>
+                                {/* Update Button */}
+                                <button
+                                    onClick={() => {
+                                        //populate the form with existing data for editing
+                                        setData({
+                                            id: exp.id,
+                                            company: exp.company,
+                                            position: exp.position,
+                                            start_date: exp.start_date?.slice(
+                                                0,
+                                                10
+                                            ),
+                                            end_date: exp.end_date?.slice(
+                                                0,
+                                                10
+                                            ),
+                                            is_current: exp.is_current,
+                                            description: exp.description,
+                                        });
+                                        setIsUpdating(true);
+
+                                        //scroll to the form
+                                        const formElement =
+                                            document.querySelector(
+                                                "#work-experience-form"
+                                            );
+                                        if (formElement) {
+                                            formElement.scrollIntoView({
+                                                behavior: "smooth",
+                                                block: "start",
+                                            });
+                                        }
+                                    }}
+                                    className="text-blue-500 hover:text-blue-700"
+                                >
+                                    Edit
+                                </button>
+                                {/* Delete Button */}
                                 <Link
                                     href={`/user/${user.username}/work-experiences`}
                                     method="delete"
@@ -84,7 +151,7 @@ export default function WorkExperienceInput({ user, setMessage }) {
 
             {/* Add New Experience Form */}
             <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} id="work-experience-form">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium mb-1">
@@ -180,7 +247,7 @@ export default function WorkExperienceInput({ user, setMessage }) {
                                 !data.start_date
                             }
                         >
-                            Add Experience
+                            {isUpdating ? "Update" : "Add"} Experience
                         </button>
                     </div>
                 </form>

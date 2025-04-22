@@ -87,6 +87,7 @@ class ProfileController extends Controller implements HasMiddleware
                 "is_current" => "nullable|boolean",
                 "description" => "nullable|string|max:500",
             ]);
+
             $user->workExperiences()->updateOrCreate(
                 [
                     'id' => $request->id,

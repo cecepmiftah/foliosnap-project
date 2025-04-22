@@ -406,7 +406,11 @@ export default function Home({ portfolios }) {
                                     variants={portfolioItemVariants}
                                     whileHover="hover"
                                 >
-                                    <div className="aspect-[4/3] bg-neutral/10 relative">
+                                    <Link
+                                        href={`/portfolios/${item.slug}`}
+                                        prefetch
+                                        className="aspect-[4/3] bg-neutral/10 relative"
+                                    >
                                         <img
                                             src={item.thumbnail}
                                             alt={`Portfolio ${item.slug}`}
@@ -433,7 +437,7 @@ export default function Home({ portfolios }) {
                                                 </p>
                                             </motion.div>
                                         </motion.div>
-                                    </div>
+                                    </Link>
                                 </motion.div>
                             ))}
                     </motion.div>

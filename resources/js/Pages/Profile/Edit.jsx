@@ -1,60 +1,9 @@
-import { Head, Link, router, useForm, usePage } from "@inertiajs/react";
-import { useEffect, useRef, useState } from "react";
+import { Head, router, useForm, usePage } from "@inertiajs/react";
+import { useRef, useState } from "react";
 import avatarImg from "../../../img/person.png";
-import WorkExperienceInput from "../../Components/ProfileComponents/WorkExperienceInput";
-import ConfirmationModal from "../../Components/ConfirmationModal";
+import WorkExperienceInput from "@/Components/ProfileComponents/WorkExperienceInput";
+import ConfirmationModal from "@/Components/ConfirmationModal";
 
-const experiences = [
-    {
-        id: 1,
-        start_date: "2020-01-01",
-        end_date: "2020-12-31",
-        is_current: false,
-        position: "Junior Developer",
-        company: "PT. ABC",
-        description:
-            "Membangun aplikasi web menggunakan teknologi React dan Node.js",
-    },
-    {
-        id: 2,
-        start_date: "2021-01-01",
-        end_date: "2022-06-30",
-        is_current: false,
-        position: "Senior Developer",
-        company: "PT. DEF",
-        description:
-            "Mengembangkan aplikasi mobile menggunakan teknologi React Native",
-    },
-    {
-        id: 3,
-        start_date: "2022-07-01",
-        end_date: null,
-        is_current: true,
-        position: "Lead Developer",
-        company: "PT. GHI",
-        description:
-            "Mengembangkan aplikasi web menggunakan teknologi Next.js dan GraphQL",
-    },
-    {
-        id: 4,
-        start_date: "2018-01-01",
-        end_date: "2019-12-31",
-        is_current: false,
-        position: "Intern",
-        company: "PT. JKL",
-        description:
-            "Membantu mengembangkan aplikasi web menggunakan teknologi PHP dan MySQL",
-    },
-    {
-        id: 5,
-        start_date: "2019-01-01",
-        end_date: "2020-06-30",
-        is_current: false,
-        position: "Junior QA",
-        company: "PT. MNO",
-        description: "Menguji aplikasi web menggunakan teknologi Selenium",
-    },
-];
 export default function Edit({ user }) {
     const { flash } = usePage().props;
 
@@ -132,14 +81,36 @@ export default function Edit({ user }) {
             {message && (
                 <div
                     role="alert"
-                    className="alert alert-success alert-soft mb-4"
+                    className="alert alert-success alert-soft mb-4 flex items-center justify-between"
                 >
                     <span>{message}</span>
+                    <button
+                        className="btn btn-sm btn-ghost"
+                        onClick={() => setMessage(null)}
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                    </button>
                 </div>
             )}
 
             {errors.error && (
-                <div role="alert" className="alert alert-error alert-soft mb-4">
+                <div
+                    role="alert"
+                    className="alert alert-error alert-soft mb-4 flex items-center justify-between"
+                >
                     <span>{errors.error}</span>
                 </div>
             )}

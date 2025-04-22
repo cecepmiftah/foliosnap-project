@@ -41,7 +41,7 @@ export default function PortfolioCardProfile({ item, user }) {
 
             {/* Tombol Delete dengan Confirmation Modal */}
             {user && user.id === item.user_id && (
-                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute top-3 right-3 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
                     <button
                         onClick={() => setShowDeleteModal(true)}
                         className="btn btn-circle btn-sm btn-error"
